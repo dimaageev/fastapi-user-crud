@@ -1,0 +1,72 @@
+[project]
+name = "test-proj"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [{ name = "dimaageev", email = "dimitri1ageev@gmail.com" }]
+dependencies = [
+    "fastapi>=0.111.1",
+    "sqlmodel>=0.0.20",
+]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = { text = "MIT" }
+[tool.pdm.scripts]
+dev = "fastapi dev src/main.py --port 4000"
+
+[tool.pdm.dev-dependencies]
+dev = ["ruff>=0.5.2"]
+[tool.pdm]
+distribution = false
+
+# ruff config
+[tool.ruff]
+fix = true
+line-length = 80
+extend-exclude = ['.venv', 'src/openapi_client']
+src = ['src', 'tools', 'stubs', 'tests', 'alembic']
+
+[tool.ruff.format]
+docstring-code-format = true
+quote-style = 'single'
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint]
+select = ['ALL']
+ignore = [
+    # disabled by me
+    'D1',
+    'ANN1',
+    'PT009',
+    'PT027',
+    'PD',
+    'B008',
+    # temp
+    'TCH001',
+    'TCH002',
+    'TCH003',
+    # incompatibilities
+    'D203', # D211
+    'D213', # D212
+    'S603', # S602
+    # conflicts with formatter
+    'COM812',
+    'ISC001',
+]
+
+[tool.ruff.lint.per-file-ignores]
+# allow too long lines in migration scripts
+'alembic/**' = ['E501']
+
+[tool.ruff.lint.flake8-annotations]
+allow-star-arg-any = true
+
+[tool.ruff.lint.flake8-quotes]
+# docstring-quotes = 'single'
+inline-quotes = 'single'
+# multiline-quotes = 'single'
+
+[tool.ruff.lint.flake8-type-checking]
+quote-annotations = true
+
+[tool.ruff.lint.isort]
+force-single-line = false
