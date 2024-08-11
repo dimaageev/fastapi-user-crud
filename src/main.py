@@ -25,8 +25,3 @@ app.add_middleware(
 )
 
 app.include_router(user_routes.router)
-
-
-@app.get('/')
-def read_root() -> dict:
-    return {'Hello': 'World'}
